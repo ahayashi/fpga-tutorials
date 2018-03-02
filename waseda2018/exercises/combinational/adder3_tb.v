@@ -5,7 +5,7 @@ module TB;
    reg  [2:0] A, B;
    wire [3:0] ANS;
 
-   // Adder3 adder_3b(A, B, ANS);
+   Adder3 adder_3b(A, B, ANS);
 
    initial begin
       $monitor ($time, ": Adder3: A: %x, B: %x, ANS: %x", A, B, ANS);
