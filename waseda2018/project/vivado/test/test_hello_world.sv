@@ -44,7 +44,7 @@ logic [15:0] vled_value;
         $display ("TEST FAILED");
 
 // start WASEDA_REG1_ADDR test 
-      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // read register initial value
+      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(idata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // read register initial value
       $display ("Reading 0x%x from address 0x%x", idata, `WASEDA_REG1_ADDR);
 
       $display ("Writing 0x0000_00EF to address 0x%x", `WASEDA_REG1_ADDR);
