@@ -18,9 +18,29 @@ module TB;
     initial begin
       $monitor($time, ": Button: %x, ANS: %x", Button, Y);
       Button = 1'b0;
-      #2;
       rst = 1'b1;
+      #4;
+      rst = 1'b0;
+      #2;
       Button = 1'b1;
+      #2;
+      Button = 1'b0;
+      #2;
+      Button = 1'b1;
+      #2;
+      Button = 1'b0;
+      #2;
+      Button = 1'b1;
+      #2;
+      Button = 1'b0;
+      #2;
+      Button = 1'b1;
+      #2;
+      Button = 1'b0;
+      #2;
+      Button = 1'b1;
+      #2;
+      Button = 1'b0;
       #10;
     end
 endmodule
