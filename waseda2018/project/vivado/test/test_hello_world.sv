@@ -24,6 +24,7 @@ tb tb();
 parameter [5:0] AXI_ID = 6'h0;
 
 logic [31:0] rdata;
+logic [31:0] idata;
 logic [15:0] vdip_value;
 logic [15:0] vled_value;
 
@@ -42,24 +43,28 @@ logic [15:0] vled_value;
       else
         $display ("TEST FAILED");
 
-      $display ("Writing 0x0000_00EF to address 0x%x", `WASEDA_REG1_ADDR);
-      tb.poke(.addr(`WASEDA_REG1_ADDR), .data(32'h0000_00EF), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register
+// start WASEDA_REG1_ADDR test 
+      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // read register initial value
+      $display ("Reading 0x%x from address 0x%x", idata, `WASEDA_REG1_ADDR);
 
-      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // start read & write
+      $display ("Writing 0x0000_00EF to address 0x%x", `WASEDA_REG1_ADDR);
+      tb.poke(.addr(`WASEDA_REG1_ADDR), .data(32'h0000_00EF), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register first
+
+      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // read register
       $display ("Reading 0x%x from address 0x%x", rdata, `WASEDA_REG1_ADDR);
 
-      if (rdata == 32'h0000_00EF) // Check for add value in register read
+      if ((rdata - idata) == 32'h0000_00EF) // Check for add value in register read
         $display ("TEST PASSED");
       else
         $display ("TEST FAILED");
 
       $display ("Writing 0x0000_00EF to address 0x%x", `WASEDA_REG1_ADDR);
-      tb.poke(.addr(`WASEDA_REG1_ADDR), .data(32'h0000_00EF), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register
+      tb.poke(.addr(`WASEDA_REG1_ADDR), .data(32'h0000_00EF), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register second
 
-      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // start read & write
+      tb.peek(.addr(`WASEDA_REG1_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // read register
       $display ("Reading 0x%x from address 0x%x", rdata, `WASEDA_REG1_ADDR);
 
-      if (rdata == 32'h0000_01DE) // Check for add value in register read
+      if ((rdata - idata) == 32'h0000_01DE) // Check for add value in register read
         $display ("TEST PASSED");
       else
         $display ("TEST FAILED");
