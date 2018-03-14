@@ -255,7 +255,7 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
     printf("=====  Entering WASEDA_REGISTER1 (Counter) example =====\n");
     {
       uint32_t expected;
-      uint32_t inital;
+      uint32_t initial;
       // READ
       /* read it back and print it out; you should expect the byte order to be
        * reversed (That's what this CL does) */
