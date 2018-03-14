@@ -254,10 +254,20 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
 
     printf("=====  Entering WASEDA_REGISTER1 (Counter) example =====\n");
     {
+      uint32_t expected;
+      uint32_t inital;
+      // READ
+      /* read it back and print it out; you should expect the byte order to be
+       * reversed (That's what this CL does) */
+      printf("Reading from WASEDA_REGISTER1 (0x%016lx)\n", WASEDA_REG1_ADDR);
+      rc = fpga_pci_peek(pci_bar_handle, WASEDA_REG1_ADDR, &initial);
+      fail_on(rc, out, "Unable to read read from the fpga !");
+      printf("INITIAL READ: 0x%x\n", initial);
+
       // WRITE
       /* write a value into the mapped address space */      
       printf("Writing 0x%08x to WASEDA_REGISTER1 (0x%016lx)\n", 0xef, WASEDA_REG1_ADDR);
-      rc = fpga_pci_poke(pci_bar_handle, WASEDA_REG1_ADDR, 0xef);      
+      rc = fpga_pci_poke(pci_bar_handle, WASEDA_REG1_ADDR, 0xef);
       fail_on(rc, out, "Unable to write to the fpga !");
 
       // READ
@@ -267,12 +277,13 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
       rc = fpga_pci_peek(pci_bar_handle, WASEDA_REG1_ADDR, &value);
       fail_on(rc, out, "Unable to read read from the fpga !");
       printf("READ: 0x%x\n", value);
-      if(value == 0xef) {
+      expected = 0xef + initial;
+      if(value == expected) {
         printf("TEST PASSED\n");
-        printf("Resulting value matched expected value 0x%x. It worked!\n", 0xef);
+        printf("Resulting value matched expected value 0x%x. It worked!\n", expected);
       } else{
         printf("TEST FAILED\n");
-        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", 0xef);
+        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", expected);
       }
       
       // WRITE AGAIN
@@ -288,13 +299,14 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
       fail_on(rc, out, "Unable to read read from the fpga !");
       printf("=====  Entering peek_poke_example =====\n");
       printf("READ: 0x%x\n", value);
-      if(value == 0x1de) {
+      expected = initial + 0xef + 0xef;
+      if(value == expected) {
         printf("TEST PASSED\n");
-        printf("Resulting value matched expected value 0x%x. It worked!\n", 0x1de);
+        printf("Resulting value matched expected value 0x%x. It worked!\n", expected);
       }
       else{
         printf("TEST FAILED\n");
-        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", 0x1de);
+        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", expected);
       }
     }
 
