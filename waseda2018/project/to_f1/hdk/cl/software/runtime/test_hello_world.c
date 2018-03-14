@@ -269,11 +269,10 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
       printf("READ: 0x%x\n", value);
       if(value == 0xef) {
         printf("TEST PASSED\n");
-        printf("Resulting value matched expected value 0x%x. It worked!\n", expected);
-      }
-      else{
+        printf("Resulting value matched expected value 0x%x. It worked!\n", 0xef);
+      } else{
         printf("TEST FAILED\n");
-        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", expected);
+        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", 0xef);
       }
       
       // WRITE AGAIN
@@ -291,11 +290,11 @@ int peek_poke_example(uint32_t value, int slot_id, int pf_id, int bar_id) {
       printf("READ: 0x%x\n", value);
       if(value == 0x1de) {
         printf("TEST PASSED\n");
-        printf("Resulting value matched expected value 0x%x. It worked!\n", expected);
+        printf("Resulting value matched expected value 0x%x. It worked!\n", 0x1de);
       }
       else{
         printf("TEST FAILED\n");
-        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", expected);
+        printf("Resulting value did not match expected value 0x%x. Something didn't work.\n", 0x1de);
       }
     }
 
