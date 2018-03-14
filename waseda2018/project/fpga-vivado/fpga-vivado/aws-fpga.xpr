@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="20" Path="/home/ahayashi/fpga-tutorials/waseda2018/project/aws-fpga/aws-fpga/aws-fpga.xpr">
+<Project Version="7" Minor="20" Path="/home/ahayashi/fpga-tutorials/waseda2018/project/vivado/fpga-vivado/fpga-vivado.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="80aa9cda8b574523b42b472c4fc52178"/>
